@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://supersimple.dev/exercises/youtube/ -->
+<html data-preferred-theme="dark" class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>YouTube Exercise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <style data-fullcalendar=""></style><link href="./YouTube Exercise1_files/css2" rel="stylesheet">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .Exercises-YouTube {
+        font-family: Roboto, Arial, sans-serif;
+        padding-top: 57px;
+        padding-left: 72px;
+        background-color: rgb(249, 249, 249);
+      }
+
+      .header {
+        display: flex;
+        height: 57px;
+        border-bottom: 1px solid rgb(222, 222, 222);
+        margin-bottom: 20px;
+        justify-content: space-between;
+        align-items: center;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+
+        z-index: 100;
+      }
+
+      .left-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .left-section .hamburger-menu {
+        height: 24px;
+        margin-left: 24px;
+        margin-right: 24px;
+        cursor: pointer;
+      }
+
+      .left-section .youtube-logo {
+        height: 20px;
+        cursor: pointer;
+      }
+
+      .middle-section {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        max-width: 470px;
+        margin-left: 60px;
+      }
+
+      .middle-section .search-button img {
+        height: 24px;
+      }
+
+      .middle-section .voice-search {
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        border: none;
+        background-color: rgb(248, 248, 248);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .middle-section .voice-search img {
+        height: 24px;
+      }
+
+      .right-section {
+        display: flex;
+        align-items: center;
+        width: 182px;
+        justify-content: space-between;
+        margin-right: 24px;
+        margin-left: 29px;
+        flex-shrink: 0;
+      }
+
+      .right-section .icon {
+        cursor: pointer;
+        height: 24px;
+      }
+
+      .right-section .my-channel {
+        height: 32px;
+        cursor: pointer;
+      }
+
+      .notification-count {
+        background-color: rgb(204, 0, 0);
+        border-radius: 80px;
+        position: absolute;
+        top: -3px;
+        right: -7px;
+        color: white;
+        border: 2px solid white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        padding: 1.5px 5px;
+        pointer-events: none;
+      }
+
+      .search-bar {
+        font-family: Roboto, Arial, sans-serif;
+        height: 40px;
+        flex: 1;
+        width: 0;
+        min-width: 0;
+        padding-left: 12px;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+
+        border: 1px solid rgb(204, 204, 204);
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+
+        box-shadow: inset 0px 1px 2px rgb(238, 238, 238)
+      }
+
+      .search-bar:focus {
+        outline: 1px solid rgb(31, 92, 198);
+        outline-offset: -1px;
+      }
+
+      .search-bar::placeholder {
+        color: rgb(136, 136, 136);
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .search-button {
+        height: 40px;
+        width: 64px;
+
+        border: 1px solid rgb(204, 204, 204);
+        border-left: none;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+
+        background-color: rgb(247, 247, 247);
+        cursor: pointer;
+        margin-right: 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .search-button:hover {
+        background-color: rgb(239, 239, 239);
+      }
+
+      .search-button:active {
+        background-color: rgb(232, 232, 232);
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 56px;
+        bottom: 0;
+
+        background-color: white;
+        width: 72px;
+        padding-top: 4px;
+
+        z-index: 200;
+      }
+
+      .sidebar-link {
+        font-size: 10px;
+        height: 74px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+      }
+
+      .sidebar-link:hover {
+        background-color: rgb(238, 238, 238);
+      }
+
+      .sidebar-link img {
+        height: 24px;
+        margin-bottom: 6.5px;
+      }
+
+      .tooltip {
+        background-color: rgba(96, 96, 96, 0.9);
+        color: white;
+        font-size: 12px;
+        padding: 8px;
+        border-radius: 2px;
+        position: absolute;
+
+        bottom: -50px;
+
+        opacity: 0;
+        transition: opacity 0.15s;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      .tooltip-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+
+      .tooltip-container:hover .tooltip {
+        opacity: 1;
+      }
+
+      main {
+        min-height: 120vh;
+      }
+
+      .video-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 8px;
+        row-gap: 22px;
+        padding: 20px;
+      }
+
+      @media (min-width: 870px) and (max-width: 1124px) {
+        .video-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      @media (min-width: 1125px) {
+        .video-grid {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+      }
+
+      .thumbnail {
+        width: 100%;
+      }
+
+      .video-title {
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        width: 100%;
+        line-height: 20px;
+        margin-bottom: 0;
+
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+      }
+
+      .channel-name,
+      .video-stats {
+        font-size: 12px;
+        color: rgb(96, 96, 96);
+      }
+
+      .channel-name {
+        margin-top: 10px;
+        margin-bottom: 0;
+      }
+
+      .video-stats {
+        margin-top: 4px;
+      }
+
+      .channel-link {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .video-link {
+        text-decoration: none;
+        color: black;
+      }
+
+      .video-card {
+        padding: 4px;
+        vertical-align: top;
+      }
+
+      .video-info-grid {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+      }
+
+      .channel-profile-pic img {
+        width: 36px;
+        border-radius: 36px;
+        margin-top: 8px;
+      }
+
+      .thumbnail-container {
+        position: relative;
+      }
+
+      .video-time {
+        position: absolute;
+        bottom: 11px;
+        right: 4px;
+
+        color: white;
+        background-color: rgba(0, 0, 0, 0.9);
+        font-size: 12px;
+        padding: 4px;
+        border-radius: 2px;
+        font-weight: 500;
+      }
+    </style>
+  <link href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/inject.css" rel="stylesheet" type="text/css" data-apio="true"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_chrome-extension_inject_global_module_scss.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_common_components_ui_rich-text-editor_toolbar_UserSnippetsButton_module_scss-assets_ap-9b07b5.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_ai-email-assist_OneOffEmail_AIAssistantPanel_AIAssistantPanel_tsx-asset-cbcdef.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_actions_emailAccountActions_tsx-assets_app_actions_taskActions_ts-assets_app_compo-73fe6f.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_dialogs_InactiveContactStageConfigureDialog_tsx-assets_app_containers_a-57bdff.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_cards_CardExplorerOrganizationNewsArticleCard_module_scss-assets_app_co-4fc3e8.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_containers_activities_LogActivityTabs_module_scss-assets_chrome-extension_containe-381cfe.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_chrome-extension_v2_surfaces_linkedin_components_linkedin-overlay_LinkedinOverlay_tsx--70097a.css"><link data-apio="true" rel="stylesheet" type="text/css" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_chrome-extension_inject_core_components_OpenPopupButton_tsx-assets_chrome-extension_in-571c95.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/vendors-node_modules_re-resizable_lib_index_js-node_modules_lodash-es_escape_js-node_modules_-d1d867.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_intent-data_IntentDataBarsContainer_tsx-assets_app_containers_dialogs_D-09a5ae.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_actions_accountHierarchyActions_ts-assets_app_components_recommendations_WebsiteVi-1e8646.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_playbooks_UserLinkedinProspectorPreferenceDialog_tsx-assets_app_compone-f8f8ca.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_push-sequences_PushSequences_tsx-assets_app_containers_contacts_Contact-1744f2.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_recommendations_NumberScoreDisplay_tsx-assets_app_containers_accounts_A-49884c.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_personas_ManagePersonasDialog_tsx-assets_common_images_managePersona_svg.chunk.js"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_cards_CardExplorerGeneralInformationCard_tsx-assets_app_components_card-dee0cc.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_cards_CardExplorerGeneralInformationCard_tsx-assets_app_components_card-dee0cc.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_cards_CardExplorerSearchSignalsCard_tsx-assets_app_containers_mixed-com-727ae1.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_ai-setup-wizard_AISetupWizardModal_tsx.chunk.js"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_finders_FinderExplorerSidebar_module_scss-assets_app_components_common_-778e91.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_finders_FinderExplorerSidebar_module_scss-assets_app_components_common_-778e91.chunk.js"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_actions_signalActions_ts-assets_app_constants_ListViewItemConstants_ts-assets_app_-d3e715.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_actions_signalActions_ts-assets_app_constants_ListViewItemConstants_ts-assets_app_-d3e715.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_common_components_mixed-companies_MixedCompanySidebarHeader_tsx.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_selectable-tables_columns_masterColumns_module_scss-assets_common_selec-b6b745.chunk.js"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_containers_prospect_ContactSidebarRenderer_tsx-assets_app_components_ai-setup-wiza-5a6fbe.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_containers_prospect_ContactSidebarRenderer_tsx-assets_app_components_ai-setup-wiza-5a6fbe.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_shell_navigationUtility_ts.chunk.js"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_accounts_MixedCompanySidebarDisplay_tsx.chunk.js"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_personas_PersonaFinderPreview_tsx-assets_app_components_accounts_Accoun-92a37f.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_personas_PersonaFinderPreview_tsx-assets_app_components_accounts_Accoun-92a37f.chunk.js"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/nm_assets_common_components_contacts_PhoneNumberBadge_module_scss-react-content-loa-ee8354.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_common_components_contacts_PhoneNumberBadge_module_scss-node_modules_react-content-loa-ee8354.chunk.js"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_ai-setup-wizard_AISetupWizardModal_module_scss-assets_app_components_ai-f27c7c.css"><link rel="prefetch" as="style" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/css/a_app_components_finders_sieves_FinderPersonaSieve_tsx-assets_app_components_ai-setup-wi-98fda0.css"><link rel="prefetch" as="script" href="chrome-extension://alhgpfoeiimagjlnfekdhkjlkiomcapa/js/assets_app_components_finders_sieves_FinderPersonaSieve_tsx-assets_app_components_ai-setup-wi-98fda0.chunk.js"></head>
+  <body>
+    <div class="zp-open-popup-button"><div class="x_R61yl zp-10-0-5-zp-fixed"><img alt="Apollo.io" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIxLjQ2NTUgNS4wNzE0N0wyMS40NzAzIDE1Ljk4NjNDMjEuNDcxIDE3LjcxMDYgMTkuNjM2NCAxOC44MTYyIDE4LjExMjEgMTguMDFMNy4xNjk4IDEyLjIyMjZDOC4wMDQzMyAxMC44NDkyIDkuMDUzNzcgOS42MjEwOSAxMC4yNzA0IDguNTgzMzJMMTguODUyNCAxNi41MTQ4QzE5LjMwNzEgMTYuOTM1IDIwLjAyNCAxNi40Nzk0IDE5LjgzNjcgMTUuODg5NEwxNi41MDg1IDUuNDA5MDJDMTcuNjI4OCA1LjE0MjEgMTguNzk3MiA1IDE5Ljk5ODkgNUMyMC40OTM5IDUgMjAuOTgyOSA1LjAyNDYgMjEuNDY1NSA1LjA3MTQ3WiIgZmlsbD0iI0VCRjIxMiIvPgo8cGF0aCBkPSJNMTguNDk2MyAzNC45MjUyTDE4LjQ5MTUgMjQuMDY1NEMxOC40OTA4IDIyLjM0MSAyMC4zMjU0IDIxLjIzNTUgMjEuODQ5NyAyMi4wNDE3TDMyLjc5NiAyNy44MzEyQzMxLjk1NTggMjkuMjAxIDMwLjkwMTYgMzAuNDI1MSAyOS42ODAxIDMxLjQ1ODFMMjEuMTA5NCAyMy41MzY5QzIwLjY1NDcgMjMuMTE2NyAxOS45Mzc4IDIzLjU3MjMgMjAuMTI1MSAyNC4xNjIzTDIzLjQ0MDcgMzQuNjAzMUMyMi4zMzYxIDM0Ljg2MjQgMjEuMTg0NCAzNSAyMC4wMDA1IDM1QzE5LjQ5MjkgMzUgMTguOTkwOSAzNC45NzQ2IDE4LjQ5NjMgMzQuOTI1MloiIGZpbGw9IiNFQkYyMTIiLz4KPHBhdGggZD0iTTIzLjQ5MTggMTguODk4MUwzMS40Mzk3IDEwLjI5OTFDMzAuNDAyNyA5LjA3NzY3IDI5LjE3NDQgOC4wMjM5NSAyNy44IDcuMTg1NjNMMjEuOTk2NCAxOC4xNTc4QzIxLjE5MDEgMTkuNjgyIDIyLjI5NTkgMjEuNTE2NyAyNC4wMjAzIDIxLjUxNTlMMzQuOTI0NSAyMS41MTExQzM0Ljk3NDIgMjEuMDE0MSAzNSAyMC41MTAxIDM1IDIwQzM1IDE4LjgxMzggMzQuODYxNyAxNy42NiAzNC42MDE0IDE2LjU1MzNMMjQuMTE3MiAxOS44ODIzQzIzLjUyNzIgMjAuMDY5NiAyMy4wNzE2IDE5LjM1MjggMjMuNDkxOCAxOC44OTgxWiIgZmlsbD0iI0VCRjIxMiIvPgo8cGF0aCBkPSJNNS4wNzA4MSAxOC41NDA2TDE1Ljk0MiAxOC41MzU4QzE3LjY2NjYgMTguNTM1MSAxOC43NzIyIDIwLjM2OTYgMTcuOTY1OSAyMS44OTM5TDEyLjE5MjIgMzIuODA5NUMxMC44MjMxIDMxLjk3MzIgOS41OTg5OCAzMC45MjMzIDguNTY1MTcgMjkuNzA2N0wxNi40NzA3IDIxLjE1MzZDMTYuODkwOSAyMC42OTg5IDE2LjQzNTEgMTkuOTgyIDE1Ljg0NTEgMjAuMTY5NEw1LjQwNzU0IDIzLjQ4MzZDNS4xNDE2MSAyMi4zNjU3IDUgMjEuMTk5NSA1IDIwQzUgMTkuNTA3NSA1LjAyNDQzIDE5LjAyMDcgNS4wNzA4MSAxOC41NDA2WiIgZmlsbD0iI0VCRjIxMiIvPgo8L3N2Zz4K" class="x_kJtSQ"></div></div><div class="Exercises-YouTube">
+      <header class="header">
+        <div class="left-section">
+          <img class="hamburger-menu" src="./YouTube Exercise1_files/hamburger-menu.svg">
+          <img class="youtube-logo" src="./YouTube Exercise1_files/youtube-logo.svg">
+        </div>
+
+        <div class="middle-section">
+          <input class="search-bar" type="text" placeholder="Search">
+          <button class="search-button tooltip-container">
+            <img src="./YouTube Exercise1_files/search.svg">
+            <div class="tooltip">Search</div>
+          </button>
+          <button class="voice-search tooltip-container">
+            <img src="./YouTube Exercise1_files/voice-search-icon.svg">
+            <div class="tooltip">Search with your voice</div>
+          </button>
+        </div>
+
+        <div class="right-section">
+          <div class="tooltip-container">
+            <img class="icon" src="./YouTube Exercise1_files/upload.svg">
+            <div class="tooltip">Create</div>
+          </div>
+          <div class="tooltip-container">
+            <img class="icon" src="./YouTube Exercise1_files/youtube-apps.svg">
+            <div class="tooltip">YouTube apps</div>
+          </div>
+          <div class="tooltip-container">
+            <img class="icon" src="./YouTube Exercise1_files/notifications.svg">
+            <div class="notification-count">3</div>
+            <div class="tooltip">Notifications</div>
+          </div>
+          <img class="my-channel" src="./YouTube Exercise1_files/my-channel.jpeg">
+        </div>
+      </header>
+
+      <nav class="sidebar">
+        <div class="sidebar-link">
+          <img src="./YouTube Exercise1_files/home.svg">
+          <div>Home</div>
+        </div>
+        <div class="sidebar-link">
+          <img src="./YouTube Exercise1_files/explore.svg">
+          <div>Explore</div>
+        </div>
+        <div class="sidebar-link">
+          <img src="./YouTube Exercise1_files/subscriptions.svg">
+          <div>Subscriptions</div>
+        </div>
+        <div class="sidebar-link">
+          <img src="./YouTube Exercise1_files/originals.svg">
+          <div>Originals</div>
+        </div>
+        <div class="sidebar-link">
+          <img src="./YouTube Exercise1_files/youtube-music.svg">
+          <div>YouTube Music</div>
+        </div>
+        <div class="sidebar-link">
+          <img src="./YouTube Exercise1_files/library.svg">
+          <div>Library</div>
+        </div>
+      </nav>
+
+      <main>
+        <section class="video-grid">
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=n2RNcPRtAiY">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-1.webp">
+              </a>
+              <div class="video-time">14:20</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/c/mkbhd">
+                  <img src="./YouTube Exercise1_files/channel-1.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=n2RNcPRtAiY">
+                    Talking Tech and AI with Google CEO Sundar Pichai!
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/c/mkbhd">
+                    Marques Brownlee
+                  </a>
+                </p>
+                <p class="video-stats">
+                  3.4M views · 6 months ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=mP0RAo9SKZk">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-2.webp">
+              </a>
+              <div class="video-time">8:22</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/c/markiplier">
+                  <img src="./YouTube Exercise1_files/channel-2.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=mP0RAo9SKZk">
+                    Try Not To Laugh Challenge #9
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/c/markiplier">
+                    Markiplier
+                  </a>
+                </p>
+                <p class="video-stats">
+                  19M views · 4 years ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=FgjPQQeTh1w">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-3.webp">
+              </a>
+              <div class="video-time">9:13</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/user/SSSniperWolf">
+                  <img src="./YouTube Exercise1_files/channel-3.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=FgjPQQeTh1w">
+                    Crazy Tik Toks Taken Moments Before DISASTER
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/user/SSSniperWolf">
+                    SSSniperWolf
+                  </a>
+                </p>
+                <p class="video-stats">
+                  12M views · 1 year ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=094y1Z2wpJg">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-4.webp">
+              </a>
+              <div class="video-time">22:09</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/c/veritasium">
+                  <img src="./YouTube Exercise1_files/channel-4.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=094y1Z2wpJg">
+                    The Simplest Math Problem No One Can Solve - Collatz Conjecture
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/c/veritasium">
+                    Veritasium
+                  </a>
+                </p>
+                <p class="video-stats">
+                  18M views · 4 months ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=86CQq3pKSUw">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-5.webp">
+              </a>
+              <div class="video-time">11:17</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/c/CSDojo">
+                  <img src="./YouTube Exercise1_files/channel-5.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=86CQq3pKSUw">
+                    Kadane's Algorithm to Maximum Sum Subarray Problem
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/c/CSDojo">
+                    CS Dojo
+                  </a>
+                </p>
+                <p class="video-stats">
+                  519K views · 5 years ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=yXWw0_UfSFg">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-6.webp">
+              </a>
+              <div class="video-time">19:59</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA">
+                  <img src="./YouTube Exercise1_files/channel-6.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=yXWw0_UfSFg">
+                    Anything You Can Fit In The Circle I’ll Pay For
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/channel/UCX6OQ3DkcsbYNE6H8uQQuVA">
+                    MrBeast
+                  </a>
+                </p>
+                <p class="video-stats">
+                  141M views · 1 year ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=fNVa1qMbF9Y">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-7.webp">
+              </a>
+              <div class="video-time">10:13</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/channel/UCP5tjEmvPItGyLhmjdwP7Ww">
+                  <img src="./YouTube Exercise1_files/channel-7.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=fNVa1qMbF9Y">
+                    Why Planes Don't Fly Over Tibet
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/channel/UCP5tjEmvPItGyLhmjdwP7Ww">
+                    RealLifeLore
+                  </a>
+                </p>
+                <p class="video-stats">
+                  6.6M views · 1 year ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=lFm4EM1juls">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-8.webp">
+              </a>
+              <div class="video-time">7:12</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/channel/UCHAK6CyegY22Zj2GWrcaIxg">
+                  <img src="./YouTube Exercise1_files/channel-8.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=lFm4EM1juls">
+                    Inside The World's Biggest Passenger Plane
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/channel/UCHAK6CyegY22Zj2GWrcaIxg">
+                    Tech Vision
+                  </a>
+                </p>
+                <p class="video-stats">
+                  3.7M views · 10 months ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=ixmxOlcrlUc">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-9.webp">
+              </a>
+              <div class="video-time">13:17</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/c/OFFICIALTHENXSTUDIOS">
+                  <img src="./YouTube Exercise1_files/channel-9.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=ixmxOlcrlUc">
+                    The SECRET to Super Human STRENGTH
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/c/OFFICIALTHENXSTUDIOS">
+                    ThenX
+                  </a>
+                </p>
+                <p class="video-stats">
+                  20M views · 3 year ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=R2vXbFp5C9o">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-10.webp">
+              </a>
+              <div class="video-time">7:53</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/user/businessinsider">
+                  <img src="./YouTube Exercise1_files/channel-10.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=R2vXbFp5C9o">
+                    How The World's Largest Cruise Ship Makes 30,000 Meals Every Day
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/user/businessinsider">
+                    Business Insider
+                  </a>
+                </p>
+                <p class="video-stats">
+                  14M views · 1 year ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=0nZuYyXET3s">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-11.webp">
+              </a>
+              <div class="video-time">4:10</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/c/Destinationtips">
+                  <img src="./YouTube Exercise1_files/channel-11.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=0nZuYyXET3s">
+                    Dubai's Crazy Underwater Train and Other Things #Only in Dubai
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/c/Destinationtips">
+                    Destination Tips
+                  </a>
+                </p>
+                <p class="video-stats">
+                  3M views · 1 year ago
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="thumbnail-container">
+              <a href="https://www.youtube.com/watch?v=9iMGFqMmUFs">
+                <img class="thumbnail" src="./YouTube Exercise1_files/thumbnail-12.webp">
+              </a>
+              <div class="video-time">4:51</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-profile-pic">
+                <a href="https://www.youtube.com/teded">
+                  <img src="./YouTube Exercise1_files/channel-12.jpeg">
+                </a>
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  <a class="video-link" href="https://www.youtube.com/watch?v=9iMGFqMmUFs">
+                    What would happen if you didn’t drink water? - Mia Nacamulli
+                  </a>
+                </p>
+                <p class="channel-name">
+                  <a class="channel-link" href="https://www.youtube.com/teded">
+                    TED-Ed
+                  </a>
+                </p>
+                <p class="video-stats">
+                  12M views · 5 years ago
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  
+<div style="position: relative;" id="zp-10-0-5-licdn-root-apollo_everywhere" data-has-tooltip-listener=""><div class="x_BJJxg" data-disable-focus-trap="true"></div><div class="x_KfhZL" aria-live="polite" aria-atomic="true" data-disable-focus-trap="true"></div><span data-name="tooltip-listener" aria-hidden="true" style="display: none;"></span> </div></body></html>
