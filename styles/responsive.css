@@ -1,0 +1,160 @@
+/* General responsive styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+}
+
+/* Images should never overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive header */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+}
+
+.left-section,
+.middle-section,
+.right-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Search bar adapts */
+.search-bar {
+  flex: 1;
+  min-width: 150px;
+  max-width: 600px;
+  height: 36px;
+  padding: 0 10px;
+  font-size: 16px;
+}
+
+/* Video grid is responsive */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Video preview elements */
+.video-preview {
+  width: 100%;
+}
+
+/* Sidebar responsive visibility */
+.sidebar {
+  width: 200px;
+  padding: 10px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  gap: 8px;
+}
+
+.tooltip {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* MEDIA QUERIES */
+
+/* Small Phones */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+
+  .right-section {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-title,
+  .video-title2,
+  .video-title3,
+  .video-title4,
+  .video-title5,
+  .video-title6 {
+    font-size: 14px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+
+/* Laptops */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .video-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktops */
+@media (min-width: 1025px) and (max-width: 1600px) {
+  .video-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Large TVs or Ultra-Wide Monitors */
+@media (min-width: 1601px) {
+  .video-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Portrait Billboards (super tall screens) */
+@media (max-width: 800px) and (min-height: 1200px) {
+  .video-grid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 40px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .search-bar {
+    font-size: 20px;
+  }
+}
